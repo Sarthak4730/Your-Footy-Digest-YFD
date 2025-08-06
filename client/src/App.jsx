@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState } from "react"
+import reactLogo from "./assets/react.svg"
+import viteLogo from "/vite.svg"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
-  return (
+  return <>
     <div className='bg-yellow-300 w-1/2 h-60 mx-auto mt-60 flex flex-col justify-evenly items-center md:flex-row'>
       <div>
         <a href="https://vite.dev" target="_blank">
@@ -25,7 +25,7 @@ function App() {
         </p>
       </div>
     </div>
-  )
+  </>
 }
 
-export default App
+export default App;

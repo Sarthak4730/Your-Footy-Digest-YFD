@@ -1,6 +1,6 @@
 # FINALIZED FEATURES:
 **1. User Authentication & Favorite Team Selection**
-JWT-based login/signup
+JWT & bcrypt - based login/signup
 
 Users select their favorite teams from supported leagues
 
@@ -79,7 +79,7 @@ State toggled using RTK
 Saves user preference in localStorage
 
 **14. Responsive Mobile-First UI**
-Tailwind CSS or Shadcn ensures full responsiveness
+Tailwind CSS ensures full responsiveness
 
 Mobile-friendly navigation bar and compact match views
 
@@ -113,12 +113,12 @@ Tasks:
 
  Setup MongoDB Atlas & create base schema folders
 
-**PHASE 1: Auth & Favorite Team Selection (2–3 Days)**
-Goal: User signup/login with JWT and select favorite teams
+**PHASE 1: User Authorization (2–3 Days)**
+Goal: User signup/login
 
 Frontend:
 
- Auth pages (Login/Register) using Shadcn UI
+ Auth pages (Login/Register)
 
  Dashboard on login with team selection screen
 
@@ -128,13 +128,11 @@ Backend:
 
  JWT generation & middleware
 
- User schema: email, password (hashed), favorites (array of team IDs)
+ User schema: email, password (bcrypt-hashed)
 
 Extras:
 
- Protect routes using JWT on frontend
-
- Store favorites on selection, redirect to home/dashboard
+ Protect routes using JWT on frontend, if unauthorized redirect to home/dashboard
 
 **PHASE 2: Team Fixture & Match Pages (3–4 Days)**
 Goal: Fetch and display upcoming/past fixtures per favorite team
