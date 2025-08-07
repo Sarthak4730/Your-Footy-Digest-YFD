@@ -15,10 +15,10 @@ export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
         const res = await axiosInstance.post("/login", data);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
         return res.data.user;
     } catch (err) {
-        return thunkAPI.rejectWithValue(err.response.data.message);
+        const errorMessage = err?.response?.data?.message || err?.message || "Login Failure due to Error";
+        return thunkAPI.rejectWithValue(errorMessage);
     }
 });
 
