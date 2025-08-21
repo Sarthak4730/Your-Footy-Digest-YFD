@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../services/axiosInstance";
+import { setFavs } from "../user/userSlice.js"
 
 export const register = createAsyncThunk("auth/register", async (data, thunkAPI) => {
     try {
         const res = await axiosInstance.post("/register", data);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", res.data.user);        
         return res.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response.data.message);
@@ -15,6 +18,7 @@ export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
         const res = await axiosInstance.post("/login", data);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
+        thunkAPI.dispatch(setFavs(res.data.user.favs || []));
         return res.data.user;
     } catch (err) {
         const errorMessage = err?.response?.data?.message || err?.message || "Login Failure due to Error";
@@ -44,8 +48,9 @@ const authSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(register.fulfilled, (state) => {
-                state.loading = false
+            .addCase(register.fulfilled, (state, action) => {
+                state.user = action.payload.user;
+                state.loading = false;
             })
             .addCase(register.rejected, (state, action) => {
                 state.loading = false;
@@ -56,7 +61,7 @@ const authSlice = createSlice({
                 state.error = null;
             })
             .addCase(login.fulfilled, (state, action) => {
-                state.user = action.payload
+                state.user = action.payload;
                 state.loading = false;
             })
             .addCase(login.rejected, (state, action) => {

@@ -29,7 +29,7 @@ const Register = () => {
             const res = await dispatch( register(formData) ).unwrap();
             navigate("/select-favs");
         } catch (err) {
-            console.error("Registration Failed - Error: ", err);
+            console.error("Registration Failed - Error: ", err.message);
         }
     }
 

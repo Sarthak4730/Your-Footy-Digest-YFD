@@ -28,7 +28,7 @@ const Login = () => {
             const res = await dispatch( login(formData) ).unwrap();
             navigate("/fixtures");
         } catch (err) {
-            console.error("Login Failed - Error: ", err);
+            console.error("Login Failed - Error: ", err.message);
         }
     }
 

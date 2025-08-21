@@ -11,17 +11,16 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={ <Landing/> }/>
+
         <Route path="/register" element={ <Register/> }/>
-        <Route path="/select-favs" element={ <SelectFavs/> }/>
         <Route path="/login" element={ <Login/> }/>
-        <Route
-          path="/fixtures"
-          element={
-            <ProtectedRoute>
-              <Fixtures/>
-            </ProtectedRoute>
-          }
-        />
+        
+        <Route element={ <ProtectedRoute /> }>
+          <Route path="/select-favs" element={ <SelectFavs/> } />
+          <Route path="/fixtures" element={ <Fixtures/> } />
+        </Route>
+        
+        <Route path="*" element={ <Login/> }/>
       </Routes>
     </BrowserRouter>
   )
