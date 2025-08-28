@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstanceUtil from "../../utils/axiosInstanceUtil";
+import { login, register } from "../auth/authSlice.js";
 
 export const updateFavs = createAsyncThunk("user/updateFavs", async ({ userId, favs }, { rejectWithValue }) => {
     try {
@@ -13,7 +14,7 @@ export const updateFavs = createAsyncThunk("user/updateFavs", async ({ userId, f
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        user: null,
+        userData: null,
         favs: [],
         status: "idle",
         error: null
@@ -26,16 +27,23 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(updateFavs.pending, (state) => {
-                state.status = "loading"
+                state.status = "loading";
             })
             .addCase(updateFavs.fulfilled, (state, action) => {
-                state.user = action.payload,
-                state.favs = action.payload.favs
-                state.status = "success"
+                state.userData = action.payload;
+                state.favs = action.payload.favs;
+                state.status = "success";
             })
             .addCase(updateFavs.rejected, (state, action) => {
-                state.status = "failure",
-                state.error = action.payload
+                state.status = "failure";
+                state.error = action.payload;
+            })
+            .addCase(login.fulfilled, (state, action) => {
+                state.userData = action.payload;
+                state.favs = action.payload?.favs || [];
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.userData = action.payload;
             });
     }
 });

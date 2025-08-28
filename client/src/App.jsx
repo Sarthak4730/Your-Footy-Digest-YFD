@@ -5,10 +5,12 @@ import Login from "./pages/Login";
 import SelectFavs from "./pages/SelectFavs";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Fixtures from "./pages/Fixtures";
+import RouteWatcher from "./components/RouteWatcher";
 
 function App() {
   return (
     <BrowserRouter>
+      <RouteWatcher />
       <Routes>
         <Route path="/" element={ <Landing/> }/>
 

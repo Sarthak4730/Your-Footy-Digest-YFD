@@ -6,7 +6,7 @@ export const register = createAsyncThunk("auth/register", async (data, thunkAPI)
     try {
         const res = await axiosInstance.post("/register", data);
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", res.data.user);        
+        localStorage.setItem("user", JSON.stringify(res.data.user));        
         return res.data;
     } catch (err) {
         return thunkAPI.rejectWithValue(err.response.data.message);
@@ -36,8 +36,11 @@ const authSlice = createSlice({
         error: null,
     },
     reducers: {
+        clearAuthError: (state) => {
+            state.error = null;
+        },
         logout: (state) => {
-            state.user = null,
+            state.user = null;
             localStorage.removeItem("token");
             localStorage.removeItem("user");
         },
@@ -67,9 +70,9 @@ const authSlice = createSlice({
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-            })
+            });
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { clearAuthError, logout } = authSlice.actions;
 export default authSlice.reducer;
